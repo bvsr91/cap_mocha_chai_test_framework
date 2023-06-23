@@ -9,6 +9,7 @@ build-parameters:
     - builder: custom
       commands:
         - npx cds build --production
+        - npm install --production
 modules:
   - name: cap_northwind_mochatest-srv
     type: nodejs
