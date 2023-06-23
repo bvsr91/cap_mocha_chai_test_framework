@@ -14,6 +14,8 @@ service CatalogService {
             Price
     };
 
+    entity Customers   as projection on external.Customer;
+
     @readonly
     entity SalesOrders as projection on so_extsrv.SalesOrders;
 }
