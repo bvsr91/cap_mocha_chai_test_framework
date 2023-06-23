@@ -9,11 +9,8 @@ build-parameters:
     - builder: custom
       commands:
         - npx cds build --production
-        - npm install
-        - npx -p @SAP/cds-dk cds build --production
-        - npm install @SAP-cloud-sdk/http-client
-        - npm update --package-lock-only
-        - npm clean-install --production
+        # set 'CDS_ENV=node' to pick the 'node' build profile settings, defined in package.json
+        - npx -p @sap/cds-dk cds build --profile production,node
 modules:
   - name: cap_northwind_mochatest-srv
     type: nodejs
