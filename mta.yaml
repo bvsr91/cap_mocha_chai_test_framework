@@ -8,9 +8,7 @@ build-parameters:
   before-all:
     - builder: custom
       commands:
-        - npx cds build --production
-        # set 'CDS_ENV=node' to pick the 'node' build profile settings, defined in package.json
-        - npx -p @sap/cds-dk cds build --profile production,node
+        - npx cds build --production        
 modules:
   - name: cap_northwind_mochatest-srv
     type: nodejs
