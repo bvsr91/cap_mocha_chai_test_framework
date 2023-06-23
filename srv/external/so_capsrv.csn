@@ -1,0 +1,279 @@
+{
+  "meta": {
+    "creator": "cds-dk 6.8.2"
+  },
+  "$version": "2.0",
+  "definitions": {
+    "so_capsrv.SalesOrders": {
+      "kind": "entity",
+      "@cds.external": true,
+      "@cds.persistence.skip": true,
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.String",
+          "length": 10,
+          "notNull": true
+        },
+        "description": {
+          "type": "cds.String",
+          "length": 50,
+          "notNull": true
+        },
+        "customerNo": {
+          "type": "cds.String",
+          "length": 10
+        },
+        "customer": {
+          "type": "cds.Association",
+          "@cds.ambiguous": "missing on condition?",
+          "target": "so_capsrv.Customers",
+          "cardinality": {
+            "max": 1
+          },
+          "on": [
+            {
+              "ref": [
+                "customer",
+                "customerNo"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "customerNo"
+              ]
+            }
+          ]
+        },
+        "item": {
+          "type": "cds.Association",
+          "@cds.ambiguous": "missing on condition?",
+          "target": "so_capsrv.SalesOrderItems",
+          "cardinality": {
+            "max": "*"
+          },
+          "keys": []
+        },
+        "overBookingInd": {
+          "type": "cds.Boolean",
+          "@Core.Computed": true
+        },
+        "totalQuantity": {
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 2,
+          "@Core.Computed": true
+        }
+      },
+      "@UI.LineItem": [
+        {
+          "$Type": "UI.DataField",
+          "Label": "ID",
+          "Value": {
+            "=": "ID"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "description",
+          "Value": {
+            "=": "description"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "customerNo",
+          "Value": {
+            "=": "customerNo"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "overBookingInd",
+          "Value": {
+            "=": "overBookingInd"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "totalQuantity",
+          "Value": {
+            "=": "totalQuantity"
+          }
+        }
+      ],
+      "@UI.FieldGroup#GeneratedGroup1": {
+        "$Type": "UI.FieldGroupType",
+        "Data": [
+          {
+            "$Type": "UI.DataField",
+            "Label": "ID",
+            "Value": {
+              "=": "ID"
+            }
+          },
+          {
+            "$Type": "UI.DataField",
+            "Label": "description",
+            "Value": {
+              "=": "description"
+            }
+          },
+          {
+            "$Type": "UI.DataField",
+            "Label": "customerNo",
+            "Value": {
+              "=": "customerNo"
+            }
+          },
+          {
+            "$Type": "UI.DataField",
+            "Label": "overBookingInd",
+            "Value": {
+              "=": "overBookingInd"
+            }
+          },
+          {
+            "$Type": "UI.DataField",
+            "Label": "totalQuantity",
+            "Value": {
+              "=": "totalQuantity"
+            }
+          }
+        ]
+      },
+      "@UI.Facets": [
+        {
+          "$Type": "UI.ReferenceFacet",
+          "ID": "GeneratedFacet1",
+          "Label": "General Information",
+          "Target": {}
+        }
+      ]
+    },
+    "so_capsrv.SalesOrderItems": {
+      "kind": "entity",
+      "@cds.external": true,
+      "@cds.persistence.skip": true,
+      "elements": {
+        "salesOrder": {
+          "type": "cds.Association",
+          "@cds.ambiguous": "missing on condition?",
+          "target": "so_capsrv.SalesOrders",
+          "cardinality": {
+            "max": 1
+          },
+          "on": [
+            {
+              "ref": [
+                "salesOrder",
+                "ID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "salesOrder_ID"
+              ]
+            }
+          ]
+        },
+        "salesOrder_ID": {
+          "key": true,
+          "type": "cds.String",
+          "length": 10,
+          "notNull": true
+        },
+        "item": {
+          "key": true,
+          "type": "cds.Integer",
+          "notNull": true
+        },
+        "material": {
+          "type": "cds.String",
+          "length": 10
+        },
+        "quantity": {
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 2
+        }
+      }
+    },
+    "so_capsrv.Customers": {
+      "kind": "entity",
+      "@cds.external": true,
+      "@cds.persistence.skip": true,
+      "elements": {
+        "customerNo": {
+          "key": true,
+          "type": "cds.String",
+          "length": 10,
+          "notNull": true
+        },
+        "customerName": {
+          "type": "cds.String",
+          "length": 50
+        },
+        "addresses": {
+          "type": "cds.Composition",
+          "@cds.ambiguous": "missing on condition?",
+          "target": "so_capsrv.Addresses",
+          "cardinality": {
+            "max": 1
+          },
+          "on": [
+            {
+              "ref": [
+                "addresses",
+                "ID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "addresses_ID"
+              ]
+            }
+          ]
+        },
+        "addresses_ID": {
+          "type": "cds.Integer"
+        }
+      }
+    },
+    "so_capsrv.Addresses": {
+      "kind": "entity",
+      "@cds.external": true,
+      "@cds.persistence.skip": true,
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.Integer",
+          "notNull": true
+        },
+        "city": {
+          "type": "cds.String",
+          "length": 50
+        },
+        "country": {
+          "type": "cds.String",
+          "length": 30
+        },
+        "contact_phoneNumber": {
+          "type": "cds.String",
+          "length": 10
+        },
+        "contact_email": {
+          "type": "cds.String",
+          "length": 100
+        }
+      }
+    },
+    "so_capsrv": {
+      "kind": "service",
+      "@cds.external": true
+    }
+  }
+}

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="CatalogService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="SalesOrders" EntityType="CatalogService.SalesOrders">
+                    <NavigationPropertyBinding Path="customer" Target="Customers"/>
+                    <NavigationPropertyBinding Path="item" Target="SalesOrderItems"/>
+                </EntitySet>
+                <EntitySet Name="SalesOrderItems" EntityType="CatalogService.SalesOrderItems">
+                    <NavigationPropertyBinding Path="salesOrder" Target="SalesOrders"/>
+                </EntitySet>
+                <EntitySet Name="Customers" EntityType="CatalogService.Customers">
+                    <NavigationPropertyBinding Path="addresses" Target="Addresses"/>
+                </EntitySet>
+                <EntitySet Name="Addresses" EntityType="CatalogService.Addresses"/>
+            </EntityContainer>
+            <EntityType Name="SalesOrders">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" MaxLength="10" Nullable="false"/>
+                <Property Name="description" Type="Edm.String" MaxLength="50" Nullable="false"/>
+                <Property Name="customerNo" Type="Edm.String" MaxLength="10"/>
+                <NavigationProperty Name="customer" Type="CatalogService.Customers">
+                    <ReferentialConstraint Property="customerNo" ReferencedProperty="customerNo"/>
+                </NavigationProperty>
+                <NavigationProperty Name="item" Type="Collection(CatalogService.SalesOrderItems)" Partner="salesOrder"/>
+                <Property Name="overBookingInd" Type="Edm.Boolean"/>
+                <Property Name="totalQuantity" Type="Edm.Decimal" Scale="2" Precision="10"/>
+            </EntityType>
+            <EntityType Name="SalesOrderItems">
+                <Key>
+                    <PropertyRef Name="salesOrder_ID"/>
+                    <PropertyRef Name="item"/>
+                </Key>
+                <NavigationProperty Name="salesOrder" Type="CatalogService.SalesOrders" Partner="item">
+                    <ReferentialConstraint Property="salesOrder_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="salesOrder_ID" Type="Edm.String" MaxLength="10" Nullable="false"/>
+                <Property Name="item" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="material" Type="Edm.String" MaxLength="10"/>
+                <Property Name="quantity" Type="Edm.Decimal" Scale="2" Precision="10"/>
+            </EntityType>
+            <EntityType Name="Customers">
+                <Key>
+                    <PropertyRef Name="customerNo"/>
+                </Key>
+                <Property Name="customerNo" Type="Edm.String" MaxLength="10" Nullable="false"/>
+                <Property Name="customerName" Type="Edm.String" MaxLength="50"/>
+                <NavigationProperty Name="addresses" Type="CatalogService.Addresses">
+                    <OnDelete Action="Cascade"/>
+                    <ReferentialConstraint Property="addresses_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="addresses_ID" Type="Edm.Int32"/>
+            </EntityType>
+            <EntityType Name="Addresses">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="city" Type="Edm.String" MaxLength="50"/>
+                <Property Name="country" Type="Edm.String" MaxLength="30"/>
+                <Property Name="contact_phoneNumber" Type="Edm.String" MaxLength="10"/>
+                <Property Name="contact_email" Type="Edm.String" MaxLength="100"/>
+            </EntityType>
+            <Annotations Target="CatalogService.SalesOrders">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="ID"/>
+                            <PropertyValue Property="Value" Path="ID"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="description"/>
+                            <PropertyValue Property="Value" Path="description"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="customerNo"/>
+                            <PropertyValue Property="Value" Path="customerNo"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="overBookingInd"/>
+                            <PropertyValue Property="Value" Path="overBookingInd"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="totalQuantity"/>
+                            <PropertyValue Property="Value" Path="totalQuantity"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="GeneratedGroup1">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="ID"/>
+                                    <PropertyValue Property="Value" Path="ID"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="description"/>
+                                    <PropertyValue Property="Value" Path="description"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="customerNo"/>
+                                    <PropertyValue Property="Value" Path="customerNo"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="overBookingInd"/>
+                                    <PropertyValue Property="Value" Path="overBookingInd"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="totalQuantity"/>
+                                    <PropertyValue Property="Value" Path="totalQuantity"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.Facets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="GeneratedFacet1"/>
+                            <PropertyValue Property="Label" String="General Information"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#GeneratedGroup1"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="CatalogService.SalesOrders/overBookingInd">
+                <Annotation Term="Core.Computed" Bool="true"/>
+            </Annotations>
+            <Annotations Target="CatalogService.SalesOrders/totalQuantity">
+                <Annotation Term="Core.Computed" Bool="true"/>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
