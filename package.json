@@ -15,14 +15,10 @@
   },
   "devDependencies": {
     "@sap/cds-dk": "^7",
-    "chai": "^4.3.7",
-    "chai-http": "^4.4.0",
-    "mocha": "^10.2.0",
     "sqlite3": "^5"
   },
   "scripts": {
-    "test": "mocha tests/test.js --timeout 15000 --exit",
-		"start": "npx cds run"
+    "start": "cds-serve"
   },
   "cds": {
     "requires": {
@@ -41,7 +37,7 @@
           "kind": "odata",
           "model": "srv/external/NorthWind",
           "credentials": {
-            "destination": "NorthWind"
+            "url": "https://services.odata.org/Experimental/OData/OData.svc"
           }
         },
         "so_capsrv": {
