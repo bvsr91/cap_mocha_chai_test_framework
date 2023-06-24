@@ -47,7 +47,8 @@
             "destination": "API_BUSINESS_PARTNER"
           }
         }
-      }
+      },
+      "auth": "xsuaa"
     },
     "[local]": {
       "requires": {
