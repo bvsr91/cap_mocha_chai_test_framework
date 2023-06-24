@@ -7,6 +7,7 @@
   "private": true,
   "dependencies": {
     "@sap-cloud-sdk/http-client": "^3.2.0",
+    "@sap-cloud-sdk/util": "^3.2.0",
     "@sap/cds": "^6",
     "@sap/xsenv": "^3.4.0",
     "@sap/xssec": "^3",
@@ -29,6 +30,23 @@
       "so_capsrv": {
         "kind": "odata",
         "model": "srv/external/so_capsrv"
+      },
+      "API_BUSINESS_PARTNER": {
+        "kind": "odata-v2",
+        "model": "srv/external/API_BUSINESS_PARTNER",
+        "[sandbox]": {
+          "credentials": {
+            "url": "https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_BUSINESS_PARTNER/",
+            "headers": {
+              "APIKey": "ghea3MSNK7JU2pfDlKVkgvelvcQzHsAc"
+            }
+          }
+        },
+        "[production]": {
+          "credentials": {
+            "destination": "API_BUSINESS_PARTNER"
+          }
+        }
       }
     },
     "[local]": {

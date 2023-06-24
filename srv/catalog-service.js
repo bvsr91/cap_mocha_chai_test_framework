@@ -25,5 +25,10 @@ module.exports = cds.service.impl(async function () {
         } catch (error) {
             req.error("500", error.message);
         }
+    });    
+
+    this.on('READ', 'Suppliers', async req => {
+        const bupa = await cds.connect.to('API_BUSINESS_PARTNER');
+        return bupa.run(req.query);
     });
 });
