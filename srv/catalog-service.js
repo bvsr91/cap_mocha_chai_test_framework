@@ -6,11 +6,21 @@ module.exports = cds.service.impl(async function () {
     this.on('READ', Products, request => {
         return service.tx(request).run(request.query);
     });
-   
+
+    this.on("READ", "Persons", async req => {
+        try {
+            const service = await cds.connect.to('NorthWind');
+            let result = await service.tx(req).run(req.query);
+            return result;
+        } catch (error) {
+            req.error("500", error.message);
+        }
+    });
+
     this.on("READ", "SalesOrders", async req => {
         try {
-            const service = await cds.connect.to('so_capsrv');
-            let result = await service.tx(req).run(req.query);
+            const service1 = await cds.connect.to('so_capsrv');
+            let result = await service1.tx(req).run(req.query);
             return result;
         } catch (error) {
             req.error("500", error.message);
