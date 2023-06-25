@@ -25,10 +25,21 @@ module.exports = cds.service.impl(async function () {
         } catch (error) {
             req.error("500", error.message);
         }
-    });    
+    });  
+
 
     this.on('READ', 'Suppliers', async req => {
         const bupa = await cds.connect.to('API_BUSINESS_PARTNER');
         return bupa.run(req.query);
     });
+
+    this.on("INSERT", "SalesOrders", async req => {
+        try {
+            const service1 = await cds.connect.to('so_capsrv');
+            let result = await service1.tx(req).run(req.query);
+            return result;
+        } catch (error) {
+            req.error("500", error.message);
+        }
+    });  
 });

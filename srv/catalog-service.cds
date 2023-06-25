@@ -15,9 +15,7 @@ service CatalogService  @(requires: 'authenticated-user'){
             Price
     };
 
-    entity Persons     as projection on external.Persons;
-
-    @readonly
+    entity Persons     as projection on external.Persons;    
     entity SalesOrders as projection on so_extsrv.SalesOrders;
 
     entity Suppliers   as projection on bupa.A_BusinessPartner {
