@@ -1,7 +1,20 @@
 {
-  "scopes": [],
-  "attributes": [],
-  "role-templates": [],
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.capNorthwindUser_sc",
+      "description": "CAP Northwind Mocha test User"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "capNorthwind_user",
+      "description": "UAA",
+      "scope-references": [
+        "$XSAPPNAME.capNorthwindUser_sc",
+        "uaa.user"
+      ]
+    }
+  ],
   "authorities-inheritance": false,
   "oauth2-configuration": {
     "redirect-uris": [
