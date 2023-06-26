@@ -42,4 +42,14 @@ module.exports = cds.service.impl(async function () {
             req.error("500", error.message);
         }
     });  
+
+    this.on("READ", "Categories", async req => {
+        try {
+            const service = await cds.connect.to('NorthWind');
+            let result = await service.tx(req).run(req.query);
+            return result;
+        } catch (error) {
+            req.error("500", error.message);
+        }
+    });
 });
